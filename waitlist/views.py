@@ -10,7 +10,8 @@ class StudentCreateView(generics.CreateAPIView):
     serializer_class = StudentSerializer
 
     def perform_create(self, serializer):
-        referral_code = self.request.data.get('referral_code')
+        referral_code = self.request.query_params.get('referral_code')
+        print(referral_code)
         if referral_code:
             try:
                 referrer = Student.objects.get(referral_code=referral_code)
