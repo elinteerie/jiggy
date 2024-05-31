@@ -13,3 +13,7 @@ class UniversitySerializer(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = ['id', 'name', 'short_name']
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()

@@ -3,7 +3,7 @@ from rest_framework import generics
 from .models import Student, University
 from rest_framework import generics, status
 from rest_framework.response import Response
-from .serializers import StudentSerializer, UniversitySerializer
+from .serializers import StudentSerializer, UniversitySerializer, LoginSerializer
 
 class StudentCreateView(generics.CreateAPIView):
     queryset = Student.objects.all()
@@ -28,3 +28,20 @@ class StudentCreateView(generics.CreateAPIView):
         universities = University.objects.all()
         serializer = UniversitySerializer(universities, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+
+class LoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data['email']
+        
+        try:
+            student = Student.objects.get(email=email)
+            student_serializer = StudentSerializer(student)
+            return Response(student_serializer.data, status=status.HTTP_200_OK)
+        except Student.DoesNotExist:
+            return Response({"error": "Invalid email address."}, status=status.HTTP_400_BAD_REQUEST)
