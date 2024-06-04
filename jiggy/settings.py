@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-j2bgb7+^e#!7tw5tn0d4h@=1rikt5^0vw4lwn84@^o_($95e5t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','jiggybackend.com.ng']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','jiggybackend.com.ng']
 
 
 # Application definition
@@ -172,8 +172,9 @@ CSRF_TRUSTED_ORIGINS =[
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 'EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" '
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'jiggybackend.com.ng'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'elinteerie@gmail.com'  # Your Gmail email address
-EMAIL_HOST_PASSWORD = 'hoahdwedzjrllrxl'  # The app password you generated
+EMAIL_HOST_USER = 'reg@jiggybackend.com.ng'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'kdqC,y03+IP5'  # The app password you generated
+ACTIVATE_JWT = True
