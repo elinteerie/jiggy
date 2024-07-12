@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  django:
+    build: .
+    container_name: django_app
+    command: daphne -b 0.0.0.0 -p 8000 dunetoken.asgi:application 
+    volumes:
+      - static_vol:/app/staticfiles
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - DEBUG=1  
+
+    restart: always
+#  redis:
+#   image: "redis:alpine"
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+
+#    volumes:
+#      - redis-data:/data
+
+#    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "512mb", "--maxmemory-policy", "allkeys-lru"]
+
+#    restart: always
+
+#  celery:
+#    build: .
+#    command: celery -A dunetoken worker -l info --concurrency=4
+#    volumes:
+#      - .:/app
+#   depends_on:
+#      - django
+#      - redis
+#    restart: always
+
+#  celery_beat:
+#    build: .
+#    command: celery -A dunetoken beat -l info
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - django
+#      - redis
+#    restart: always
+
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_vol:/app/staticfiles
+
+    restart: always
+      
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+
+
+
+
+
+volumes:
+  static_vol:
+  redis-data:

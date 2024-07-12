@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .email_template import *
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 
 
 class RegistrationAPIView(generics.CreateAPIView):
@@ -65,5 +67,12 @@ class UserDetailsView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
-        
     
+
+class UpdateUserView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    #permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
