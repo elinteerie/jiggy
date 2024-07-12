@@ -4,7 +4,7 @@ services:
   django:
     build: .
     container_name: django_app
-    command: daphne -b 0.0.0.0 -p 8000 dunetoken.asgi:application 
+    command: gunicorn -b 0.0.0.0:8000 jiggy.wsgi:application
     volumes:
       - static_vol:/app/staticfiles
     ports:
