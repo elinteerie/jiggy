@@ -21,4 +21,5 @@ RUN python manage.py migrate
 #RUN python 
 
 # Start the application
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "jiggy.wsgi:application"]
+#CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "jiggy.wsgi:application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "jiggy.wsgi:application"]
