@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from faker import Faker
 from accounts.models import PredefinedN
 import random
+import uuid
 
 
 class Command(BaseCommand):
@@ -23,7 +24,8 @@ class Command(BaseCommand):
                 #fake.animal()
             ]
             random.shuffle(parts)
-            return ''.join(parts)
+            na = f"{''.join(parts)}_{str(uuid.uuid4().int)[:3]}"
+            return na
 
         for _ in range(count):
             unique = False

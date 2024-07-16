@@ -236,6 +236,7 @@ CSRF_TRUSTED_ORIGINS =[
     'http://127.0.0.1',
     'http://108.181.199.73',
     'http://jiggybackend.com.ng',
+    'https://jiggybackend.com.ng',
 
     
     
