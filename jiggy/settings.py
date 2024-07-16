@@ -188,7 +188,7 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
-}s
+}
 
 
 CSRF_COOKIE_SECURE = False
