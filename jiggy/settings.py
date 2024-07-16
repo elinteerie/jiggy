@@ -102,12 +102,34 @@ WSGI_APPLICATION = 'jiggy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}"""
+
+
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'db_373a9abf_32e4_4697_aa6f_b389e44ee516',
+
+        'USER': 'u_373a9abf_32e4_4697_aa6f_b389e44ee516',
+
+        'PASSWORD': 'E57z8P4v7Id23zK4SequrA4zepIVB50l4Uy1BXfJ1801G08vcZB7',
+
+        'HOST': 'pg.rapidapp.io',
+
+        'PORT': '5432',
+
+    }
+
 }
+
 
 
 # Password validation
