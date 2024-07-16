@@ -79,3 +79,8 @@ class OTP(models.Model):
         otp.save()
 
         return otp
+    
+
+class GeneratedNames(models.Model):
+    name = models.CharField(max_length=254, null=True, blank=True)
+    used = models.BooleanField(default=False)
