@@ -8,6 +8,11 @@ import secrets
 from django.contrib.auth.models import BaseUserManager
 
 
+class PredefinedN(models.Model):
+    name = models.CharField(max_length=254, unique=True, null=True, blank=True)
+    used = models.BooleanField(default=False)
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -36,6 +41,7 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     country = models.CharField(max_length=100, blank=True)
     institution = models.ForeignKey(University, on_delete=models.CASCADE, related_name='user_uni', null=True)
+    pred_name = models.CharField(max_length=100, blank=True)
 
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -81,6 +87,3 @@ class OTP(models.Model):
         return otp
     
 
-class GeneratedNames(models.Model):
-    name = models.CharField(max_length=254, null=True, blank=True)
-    used = models.BooleanField(default=False)

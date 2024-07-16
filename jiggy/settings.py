@@ -9,11 +9,22 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import environ
 from pathlib import Path
+import dj_database_url
+import os
+
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,8 +34,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-j2bgb7+^e#!7tw5tn0d4h@=1rikt5^0vw4lwn84@^o_($95e5t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+print(env('DEBUG'))
+DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['127.0.0.1','localhost','jiggybackend.com.ng', '108.181.199.73']
 
 
@@ -110,18 +121,37 @@ WSGI_APPLICATION = 'jiggy.wsgi.application'
     }
 }"""
 
+"""DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://u_34ea266a_fd73_4ed4_bff4_f627b8ce2c97:Sz6aQ2sg8HA74wMU4d8IJhp53u9a427C4nC42XoYTzVK06R4tV5W@pg.rapidapp.io:5433/db_34ea266a_fd73_4ed4_bff4_f627b8ce2c97',
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}"""
 
 DATABASES = {
+    'default': env.db(),
+
+    
+    'extra': env.db_url(
+        'SQLITE_URL',
+        default='sqlite:////tmp/my-tmp-sqlite.db'
+    )
+}
+
+
+
+"""DATABASES = {
 
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'db_373a9abf_32e4_4697_aa6f_b389e44ee516',
+        'NAME': 'db_34ea266a_fd73_4ed4_bff4_f627b8ce2c97',
 
-        'USER': 'u_373a9abf_32e4_4697_aa6f_b389e44ee516',
+        'USER': 'u_34ea266a_fd73_4ed4_bff4_f627b8ce2c97',
 
-        'PASSWORD': 'E57z8P4v7Id23zK4SequrA4zepIVB50l4Uy1BXfJ1801G08vcZB7',
+        'PASSWORD': 'Sz6aQ2sg8HA74wMU4d8IJhp53u9a427C4nC42XoYTzVK06R4tV5W',
 
         'HOST': 'pg.rapidapp.io',
 
@@ -129,7 +159,7 @@ DATABASES = {
 
     }
 
-}
+}"""
 
 
 
