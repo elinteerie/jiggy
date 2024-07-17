@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, PredefinedN
 
 
 
@@ -18,14 +18,14 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class CustomUserViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', "last_name",'institution','country']
+        fields = ['id', 'email', 'first_name', "last_name",'institution','country', 'pred_name']
 
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['about', 'country', 'institution', 'gender', 'graduation_year']
+        fields = ['about', 'country', 'institution', 'gender', 'graduation_year', 'pred_name']
 
 
     """def update(self, instance, validated_data):
@@ -37,3 +37,9 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 """
+
+
+class PredefinedNSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PredefinedN
+        fields = ['id', 'name', 'used']

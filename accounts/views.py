@@ -76,3 +76,27 @@ class UpdateUserView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+
+
+class AssignPredefinedNameView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user  # Get the current authenticated user
+
+        if user.pred_name:  # Check if the user already has a predefined name
+            return Response({"error": "User already has a predefined name"}, status=status.HTTP_400_BAD_REQUEST)
+
+        predefined_name = PredefinedN.objects.filter(used=False).first()  # Get the first unused predefined name
+
+        if predefined_name:
+            user.pred_name = predefined_name.name
+            user.save()
+
+            predefined_name.used = True
+            predefined_name.save()
+
+            return Response({"success": "Predefined name assigned successfully", "pred_name": user.pred_name}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "No available predefined names"}, status=status.HTTP_404_NOT_FOUND)

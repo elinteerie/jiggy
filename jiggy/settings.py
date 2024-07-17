@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'waitlist',
+    'post',
     
     #ThirdParty
     'rest_framework',
@@ -57,7 +58,14 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
+    'channels',
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,6 +101,7 @@ TEMPLATES = [
 ]
 
 
+
 REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -101,6 +110,8 @@ REST_FRAMEWORK = {
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
         'drf_social_oauth2.authentication.SocialAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,  # Number of posts per page
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -130,14 +141,12 @@ WSGI_APPLICATION = 'jiggy.wsgi.application'
 }"""
 
 DATABASES = {
-    'default': env.db(),
-
-    
-    'extra': env.db_url(
-        'SQLITE_URL',
-        default='sqlite:////tmp/my-tmp-sqlite.db'
-    )
+    'default': env.db(),  # Default database
 }
+
+if env('DEBUG'):  # If DEBUG is True, use the extra database
+    DATABASES['default'] = env.db_url(
+        'SQLITE_URL')
 
 
 

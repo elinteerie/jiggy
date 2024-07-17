@@ -37,6 +37,7 @@ class User(AbstractUser):
     username = None  # Remove the username field
     email = models.EmailField(unique=True)
     about = models.TextField(blank=True)
+    balance = models.DecimalField(default=0.00, decimal_places=2,max_digits=8)
     #avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     email_verified = models.BooleanField(default=False)
     country = models.CharField(max_length=100, blank=True)
