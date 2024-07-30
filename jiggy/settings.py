@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'accounts',
     'waitlist',
     'post',
+    'agl',
     
     #ThirdParty
     'rest_framework',

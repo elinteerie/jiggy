@@ -22,4 +22,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('waitlist/', include('waitlist.urls')),
     path('post/',include('post.urls')),
+    path('agl/', include('agl.urls')),
 ]

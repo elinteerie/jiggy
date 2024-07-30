@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, ContentType
+from .models import Post, ContentType, Comment
 from accounts.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -39,3 +39,19 @@ class PostSerializer(serializers.ModelSerializer):
             content_type, created = ContentType.objects.get_or_create(name=content_type_name)
             instance.content_type = content_type
         return super().update(instance, validated_data)
+    
+
+class UserPredNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['pred_name']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserPredNameSerializer(read_only=True)
+    replies = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'post', 'user', 'content', 'parent', 'replies', 'time_created']
+        read_only_fields = ['id', 'post', 'user', 'time_created', 'replies' ]

@@ -21,7 +21,6 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
-    comments = models.TextField(blank=True)  # If comments are to be stored as text
     boosted = models.BooleanField(default=False)
     privacy = models.BooleanField(default=False)
     share_count = models.PositiveIntegerField(default=0)
@@ -40,7 +39,18 @@ class Post(models.Model):
         self.save()
 
     def __str__(self):
-        return f"{self.content_type}: {self.content[:20]} by {self.user.email}"
+        return self.headline
+    
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True)
+    time_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user} on {self.post}'
     
 
 
